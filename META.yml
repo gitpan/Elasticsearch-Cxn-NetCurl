@@ -1,0 +1,29 @@
+---
+abstract: 'A Cxn implementation which uses Net::Cul'
+author:
+  - 'Clinton Gormley <drtech@cpan.org>'
+build_requires:
+  Test::More: 0.98
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300039, CPAN::Meta::Converter version 2.130880'
+license: apache
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Elasticsearch-Cxn-NetCurl
+recommends:
+  JSON::XS: 0
+  URI::Escape::XS: 0
+requires:
+  Elasticsearch: 0.73
+  Elasticsearch::Role::Cxn::HTTP: 0
+  Moo: 0
+  Net::Curl::Easy: 0
+  Try::Tiny: 0
+  namespace::clean: 0
+resources:
+  bugtracker: https://github.com/elasticsearch/elasticsearch-perl-netcurl/issues
+  repository: git://github.com/elasticsearch/elasticsearch-perl-netcurl.git
+version: 0.01

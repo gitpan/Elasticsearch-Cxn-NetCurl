@@ -1,0 +1,13 @@
+CONTRIBUTING.asciidoc
+Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+cpanfile
+lib/Elasticsearch/Cxn/NetCurl.pm
+t/release-eol.t
+t/release-no-tabs.t
+t/release-pod-syntax.t

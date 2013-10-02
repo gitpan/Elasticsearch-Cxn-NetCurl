@@ -1,0 +1,70 @@
+NAME
+    Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses Net::Cul
+
+VERSION
+    version 0.01
+
+DESCRIPTION
+    Provides an HTTP Cxn class based on Net::Curl. The "NetCurl" Cxn class
+    is very fast and uses persistent connections but requires XS and
+    libcurl.
+
+    This class does Elasticsearch::Role::Cxn::HTTP, whose documentation
+    provides more information.
+
+SEE ALSO
+    *   Elasticsearch::Role::Cxn::HTTP
+
+    *   Elasticsearch::Cxn::LWP
+
+    *   Elasticsearch::Cxn::HTTPTiny
+
+BUGS
+    This is a stable API but this implemenation is new. Watch this space for
+    new releases.
+
+    If you have any suggestions for improvements, or find any bugs, please
+    report them to
+    <http://github.com/elasticsearch/elasticsearch-perl-netcurl/issues>. I
+    will be notified, and then you'll automatically be notified of progress
+    on your bug as I make changes.
+
+SUPPORT
+    You can find documentation for this module with the perldoc command.
+
+        perldoc Elasticsearch::Cxn::NetCurl
+
+    You can also look for information at:
+
+    *   GitHub
+
+        <http://github.com/elasticsearch/elasticsearch-perl-netcurl>
+
+    *   CPAN Ratings
+
+        <http://cpanratings.perl.org/d/Elasticsearch::Cxn::NetCurl>
+
+    *   Search MetaCPAN
+
+        <https://metacpan.org/module/Elasticsearch::Cxn::NetCurl>
+
+    *   IRC
+
+        The #elasticsearch <irc://irc.freenode.net/elasticsearch> channel on
+        "irc.freenode.net".
+
+    *   Mailing list
+
+        The main Elasticsearch mailing list
+        <http://www.elasticsearch.org/community/forum/>.
+
+AUTHOR
+    Clinton Gormley <drtech@cpan.org>
+
+COPYRIGHT AND LICENSE
+    This software is Copyright (c) 2013 by Elasticsearch BV.
+
+    This is free software, licensed under:
+
+      The Apache License, Version 2.0, January 2004
+
