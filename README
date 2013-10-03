@@ -2,7 +2,7 @@ NAME
     Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses Net::Cul
 
 VERSION
-    version 0.01
+    version 0.02
 
 DESCRIPTION
     Provides an HTTP Cxn class based on Net::Curl. The "NetCurl" Cxn class
@@ -11,6 +11,13 @@ DESCRIPTION
 
     This class does Elasticsearch::Role::Cxn::HTTP, whose documentation
     provides more information.
+
+    This module overrides the defaults from Elasticsearch::Role::Cxn as
+    sub-second timeouts don't work on all platforms. Defaults are:
+
+    *   "ping_timeout": 1 second
+
+    *   "sniff_request_timeout": 1 second
 
 SEE ALSO
     *   Elasticsearch::Role::Cxn::HTTP

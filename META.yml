@@ -3,7 +3,21 @@ abstract: 'A Cxn implementation which uses Net::Cul'
 author:
   - 'Clinton Gormley <drtech@cpan.org>'
 build_requires:
+  Data::Dumper: 0
+  Elasticsearch::Bulk: 0
+  Elasticsearch::Scroll: 0
+  Exporter: 0
+  File::Basename: 0
+  Log::Any::Adapter: 0
+  Log::Any::Adapter::Callback: 0
+  Sub::Exporter: 0
+  Test::Deep: 0
+  Test::Exception: 0
   Test::More: 0.98
+  YAML: 0
+  lib: 0
+  strict: 0
+  warnings: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
@@ -17,7 +31,7 @@ recommends:
   JSON::XS: 0
   URI::Escape::XS: 0
 requires:
-  Elasticsearch: 0.73
+  Elasticsearch: 0.74
   Elasticsearch::Role::Cxn::HTTP: 0
   Moo: 0
   Net::Curl::Easy: 0
@@ -26,4 +40,4 @@ requires:
 resources:
   bugtracker: https://github.com/elasticsearch/elasticsearch-perl-netcurl/issues
   repository: git://github.com/elasticsearch/elasticsearch-perl-netcurl.git
-version: 0.01
+version: 0.02

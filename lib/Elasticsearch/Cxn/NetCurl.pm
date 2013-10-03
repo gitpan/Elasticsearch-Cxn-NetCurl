@@ -3,13 +3,16 @@ package Elasticsearch::Cxn::NetCurl;
 use Moo;
 with 'Elasticsearch::Role::Cxn::HTTP';
 
-use Elasticsearch 0.73 ();
+use Elasticsearch 0.74 ();
 use Try::Tiny;
 use Net::Curl::Easy qw(/^CURL/);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use namespace::clean;
+
+has '+ping_timeout'          => ( default => 1 );
+has '+sniff_request_timeout' => ( default => 1 );
 
 #===================================
 sub perform_request {
@@ -23,7 +26,7 @@ sub perform_request {
 
     $handle->setopt( CURLOPT_HEADER, 0 );
 
-    #    $handle->setopt( CURLOPT_VERBOSE, 1 );
+    # $handle->setopt( CURLOPT_VERBOSE, 1 );
 
     $handle->setopt( CURLOPT_URL,           $uri );
     $handle->setopt( CURLOPT_CUSTOMREQUEST, $method );
@@ -113,7 +116,7 @@ Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses Net::Cul
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 DESCRIPTION
 
@@ -123,6 +126,17 @@ requires XS and libcurl.
 
 This class does L<Elasticsearch::Role::Cxn::HTTP>, whose documentation
 provides more information.
+
+This module overrides the defaults from L<Elasticsearch::Role::Cxn> as
+sub-second timeouts don't work on all platforms.  Defaults are:
+
+=over
+
+=item * C<ping_timeout>: C<1> second
+
+=item * C<sniff_request_timeout>: C<1> second
+
+=back
 
 =head1 SEE ALSO
 
