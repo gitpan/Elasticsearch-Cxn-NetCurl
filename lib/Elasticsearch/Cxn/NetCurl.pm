@@ -3,16 +3,28 @@ package Elasticsearch::Cxn::NetCurl;
 use Moo;
 with 'Elasticsearch::Role::Cxn::HTTP';
 
-use Elasticsearch 0.74 ();
+use Elasticsearch 0.76 ();
 use Try::Tiny;
-use Net::Curl::Easy qw(/^CURL/);
+use Net::Curl::Easy qw(
+    CURLOPT_HEADER
+    CURLOPT_VERBOSE
+    CURLOPT_URL
+    CURLOPT_CUSTOMREQUEST
+    CURLOPT_TIMEOUT_MS
+    CURLOPT_POSTFIELDS
+    CURLOPT_POSTFIELDSIZE
+    CURLOPT_HTTPHEADER
+    CURLOPT_SSL_VERIFYPEER
+    CURLOPT_SSL_VERIFYHOST
+    CURLOPT_WRITEDATA
+    CURLOPT_HEADERDATA
+    CURLINFO_RESPONSE_CODE
+    CURLOPT_TCP_NODELAY
+);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use namespace::clean;
-
-has '+ping_timeout'          => ( default => 1 );
-has '+sniff_request_timeout' => ( default => 1 );
 
 #===================================
 sub perform_request {
@@ -24,27 +36,28 @@ sub perform_request {
     my $handle = $self->handle;
     $handle->reset;
 
-    $handle->setopt( CURLOPT_HEADER, 0 );
+    #    $handle->setopt( CURLOPT_VERBOSE,     1 );
 
-    # $handle->setopt( CURLOPT_VERBOSE, 1 );
-
+    $handle->setopt( CURLOPT_HEADER,        0 );
+    $handle->setopt( CURLOPT_TCP_NODELAY,   1 );
     $handle->setopt( CURLOPT_URL,           $uri );
     $handle->setopt( CURLOPT_CUSTOMREQUEST, $method );
     $handle->setopt( CURLOPT_TIMEOUT_MS,
         1000 * ( $params->{timeout} || $self->request_timeout ) );
 
-    my %headers = ( Expect => '', %{ $self->default_headers } );
+    my %headers = %{ $self->default_headers };
 
     my $data = $params->{data};
     if ( defined $data ) {
-        $headers{'Content-Type'}
-            = $params->{mime_type} || $self->serializer->mime_type;
+        $headers{'Content-Type'} = $params->{mime_type};
+        $headers{'Expect'}       = '';
         $handle->setopt( CURLOPT_POSTFIELDS,    $data );
         $handle->setopt( CURLOPT_POSTFIELDSIZE, length $data );
     }
 
     $handle->setopt( CURLOPT_HTTPHEADER,
-        [ map { "$_: " . $headers{$_} } keys %headers ] );
+        [ map { "$_: " . $headers{$_} } keys %headers ] )
+        if %headers;
 
     if ( $self->is_https ) {
         $handle->setopt( CURLOPT_SSL_VERIFYPEER, 0 );
@@ -93,18 +106,12 @@ sub error_from_text {
 }
 
 #===================================
-sub _build_handle {
+sub _build_handle { Net::Curl::Easy->new }
 #===================================
-    my $self   = shift;
-    my $handle = Net::Curl::Easy->new;
-    $handle->setopt( CURLOPT_HEADER,  0 );
-    $handle->setopt( CURLOPT_VERBOSE, 1 );
-    return $handle;
-}
 
 1;
 
-# ABSTRACT: A Cxn implementation which uses Net::Cul
+# ABSTRACT: A Cxn implementation which uses libcurl via Net::Curl
 
 __END__
 
@@ -112,11 +119,11 @@ __END__
 
 =head1 NAME
 
-Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses Net::Cul
+Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses libcurl via Net::Curl
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 DESCRIPTION
 
@@ -126,17 +133,6 @@ requires XS and libcurl.
 
 This class does L<Elasticsearch::Role::Cxn::HTTP>, whose documentation
 provides more information.
-
-This module overrides the defaults from L<Elasticsearch::Role::Cxn> as
-sub-second timeouts don't work on all platforms.  Defaults are:
-
-=over
-
-=item * C<ping_timeout>: C<1> second
-
-=item * C<sniff_request_timeout>: C<1> second
-
-=back
 
 =head1 SEE ALSO
 

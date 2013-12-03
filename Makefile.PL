@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "A Cxn implementation which uses Net::Cul",
+  "ABSTRACT" => "A Cxn implementation which uses libcurl via Net::Curl",
   "AUTHOR" => "Clinton Gormley <drtech\@cpan.org>",
   "BUILD_REQUIRES" => {
     "Test::More" => "0.98"
@@ -22,7 +22,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "apache",
   "NAME" => "Elasticsearch::Cxn::NetCurl",
   "PREREQ_PM" => {
-    "Elasticsearch" => "0.74",
+    "Elasticsearch" => "0.76",
     "Elasticsearch::Role::Cxn::HTTP" => 0,
     "Moo" => 0,
     "Net::Curl::Easy" => 0,
@@ -35,6 +35,7 @@ my %WriteMakefileArgs = (
     "Elasticsearch::Scroll" => 0,
     "Exporter" => 0,
     "File::Basename" => 0,
+    "File::Temp" => 0,
     "Log::Any::Adapter" => 0,
     "Log::Any::Adapter::Callback" => 0,
     "Sub::Exporter" => 0,
@@ -46,7 +47,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.02",
+  "VERSION" => "0.03",
   "test" => {
     "TESTS" => "t/*.t t/10_Basic/*.t t/20_Serializer/*.t t/30_Logger/*.t t/40_Transport/*.t t/50_Cxn_Pool/*.t t/60_Cxn/*.t t/70_Helper/*.t t/90_Client_Spec/*.t"
   }

@@ -85,6 +85,10 @@ spec/test/indices.clear_cache/10_basic.yaml
 spec/test/indices.delete_alias/10_basic.yaml
 spec/test/indices.delete_mapping/10_basic.yaml
 spec/test/indices.exists/10_basic.yaml
+spec/test/indices.get_field_mapping/10_basic.yaml
+spec/test/indices.get_field_mapping/20_missing_field.yaml
+spec/test/indices.get_field_mapping/30_missing_type.yaml
+spec/test/indices.get_field_mapping/40_missing_index.yaml
 spec/test/indices.get_mapping/10_basic.yaml
 spec/test/indices.get_mapping/20_missing_type.yaml
 spec/test/indices.get_mapping/30_missing_index.yaml
@@ -157,6 +161,8 @@ t/30_Logger/60_trace_error.t
 t/30_Logger/70_trace_comment.t
 t/40_Transport/10_tidy_request.t
 t/40_Transport/20_perform_request.t
+t/40_Transport/20_send_body_as.t
+t/40_Transport/30_perform_request.t
 t/50_Cxn_Pool/10_static_normal.t
 t/50_Cxn_Pool/11_static_node_missing.t
 t/50_Cxn_Pool/12_static_node_fails.t
@@ -192,6 +198,7 @@ t/70_Helper/40_bulk_errors.t
 t/70_Helper/50_scroll.t
 t/70_Helper/60_reindex.t
 t/90_Client_Spec/00_print_version.t
+t/90_Client_Spec/01_check_all_tests.t
 t/90_Client_Spec/bulk.t
 t/90_Client_Spec/cluster.node_info.t
 t/90_Client_Spec/cluster.node_stats.t
@@ -211,6 +218,7 @@ t/90_Client_Spec/indices.clear_cache.t
 t/90_Client_Spec/indices.delete_alias.t
 t/90_Client_Spec/indices.delete_mapping.t
 t/90_Client_Spec/indices.exists.t
+t/90_Client_Spec/indices.get_field_mapping.t
 t/90_Client_Spec/indices.get_mapping.t
 t/90_Client_Spec/indices.get_template.t
 t/90_Client_Spec/indices.open.t

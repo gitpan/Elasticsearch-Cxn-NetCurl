@@ -76,6 +76,10 @@ sub test_files {
             my $setup;
             if ( $setup = $asts[0]{setup} ) {
                 shift @asts;
+                if ( check_skip( $name, $setup ) ) {
+                    plan tests => 1;
+                    return;
+                }
             }
 
             plan tests => 0 + @asts;
@@ -83,17 +87,7 @@ sub test_files {
             for my $ast (@asts) {
 
                 my ( $title, $tests ) = key_val($ast);
-
-                if ( $tests->[0]{skip} ) {
-                    my $skip = check_skip( $tests->[0]{skip} );
-                    shift @$tests;
-                    if ($skip) {
-                        $es->logger->trace_comment(
-                            "SKIPPING: $title : $skip");
-                    SKIP: { skip $skip, 1 }
-                        next;
-                    }
-                }
+                next if check_skip( $title, $tests );
 
                 if ($setup) {
                     $es->logger->trace_comment("RUNNING SETUP");
@@ -167,7 +161,10 @@ sub run_test {
     my $handler = $Test_Types{$type}
         or die "Unknown test type ($type)";
     $handler->( $got, $expect, $name )
-        || $es->logger->trace_comment("FAILED: $name");
+        || do {
+        $es->logger->trace_comment("FAILED: $name");
+        exit if $ENV{BAILOUT};
+        };
 }
 
 #===================================
@@ -184,7 +181,10 @@ sub populate_vars {
     if ( ref $val eq 'ARRAY' ) {
         return [ map { populate_vars( $_, $stash ) } @$val ];
     }
-    return $val unless defined $val and $val =~ /^\$(\w+)/;
+    return undef unless defined $val;
+    return 1 if $val eq 'true';
+    return 0 if $val eq 'false';
+    return $val unless $val =~ /^\$(\w+)/;
     return $stash->{$1};
 }
 
@@ -279,13 +279,23 @@ sub test_error {
 #===================================
 sub check_skip {
 #===================================
-    my $skip = shift;
+    my $title = shift;
+    my $cmds  = shift;
+    my $skip  = $cmds->[0]{skip} or return;
+    shift @$cmds;
+
     my ( $min, $max ) = split( /\s*-\s*/, $skip->{version} );
     my $current = $es->info->{version}{number};
 
-    return "Version $current - " . $skip->{reason}
-        if str_version($min) le str_version($current)
+    return
+        unless str_version($min) le str_version($current)
         and str_version($max) ge str_version($current);
+
+    my $reason = "Version $current - " . $skip->{reason};
+
+    $es->logger->trace_comment("SKIPPING: $title : $skip");
+SKIP: { skip $reason, 1 }
+    return 1;
 }
 
 #===================================

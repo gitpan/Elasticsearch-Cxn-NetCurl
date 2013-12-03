@@ -1,5 +1,5 @@
 ---
-abstract: 'A Cxn implementation which uses Net::Cul'
+abstract: 'A Cxn implementation which uses libcurl via Net::Curl'
 author:
   - 'Clinton Gormley <drtech@cpan.org>'
 build_requires:
@@ -8,6 +8,7 @@ build_requires:
   Elasticsearch::Scroll: 0
   Exporter: 0
   File::Basename: 0
+  File::Temp: 0
   Log::Any::Adapter: 0
   Log::Any::Adapter::Callback: 0
   Sub::Exporter: 0
@@ -31,7 +32,7 @@ recommends:
   JSON::XS: 0
   URI::Escape::XS: 0
 requires:
-  Elasticsearch: 0.74
+  Elasticsearch: 0.76
   Elasticsearch::Role::Cxn::HTTP: 0
   Moo: 0
   Net::Curl::Easy: 0
@@ -40,4 +41,4 @@ requires:
 resources:
   bugtracker: https://github.com/elasticsearch/elasticsearch-perl-netcurl/issues
   repository: git://github.com/elasticsearch/elasticsearch-perl-netcurl.git
-version: 0.02
+version: 0.03

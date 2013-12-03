@@ -1,4 +1,4 @@
-requires "Elasticsearch" => "0.74";
+requires "Elasticsearch" => "0.76";
 requires "Elasticsearch::Role::Cxn::HTTP" => "0";
 requires "Moo" => "0";
 requires "Net::Curl::Easy" => "0";
@@ -21,6 +21,7 @@ on 'test' => sub {
   requires "Elasticsearch::Scroll" => "0";
   requires "Exporter" => "0";
   requires "File::Basename" => "0";
+  requires "File::Temp" => "0";
   requires "Log::Any::Adapter" => "0";
   requires "Log::Any::Adapter::Callback" => "0";
   requires "Sub::Exporter" => "0";
