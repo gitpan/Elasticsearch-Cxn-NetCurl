@@ -6,8 +6,6 @@ build_requires:
   Data::Dumper: 0
   Elasticsearch::Bulk: 0
   Elasticsearch::Scroll: 0
-  Exporter: 0
-  File::Basename: 0
   File::Temp: 0
   Log::Any::Adapter: 0
   Log::Any::Adapter::Callback: 0
@@ -15,14 +13,13 @@ build_requires:
   Test::Deep: 0
   Test::Exception: 0
   Test::More: 0.98
-  YAML: 0
   lib: 0
   strict: 0
   warnings: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300039, CPAN::Meta::Converter version 2.130880'
+generated_by: 'Dist::Zilla version 5.012, CPAN::Meta::Converter version 2.130880'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -32,13 +29,16 @@ recommends:
   JSON::XS: 0
   URI::Escape::XS: 0
 requires:
-  Elasticsearch: 0.76
+  Elasticsearch: 1.00
+  Elasticsearch::Role::Cxn: 0
   Elasticsearch::Role::Cxn::HTTP: 0
+  Elasticsearch::Role::Is_Sync: 0
+  HTTP::Parser::XS: 0
   Moo: 0
   Net::Curl::Easy: 0
   Try::Tiny: 0
   namespace::clean: 0
 resources:
-  bugtracker: https://github.com/elasticsearch/elasticsearch-perl-netcurl/issues
-  repository: git://github.com/elasticsearch/elasticsearch-perl-netcurl.git
-version: 0.03
+  bugtracker: https://github.com/elasticsearch/elasticsearch-perl/issues
+  repository: git://github.com/elasticsearch/elasticsearch-perl.git
+version: 1.00

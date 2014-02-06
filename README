@@ -3,12 +3,12 @@ NAME
     via Net::Curl
 
 VERSION
-    version 0.03
+    version 1.00
 
 DESCRIPTION
     Provides an HTTP Cxn class based on Net::Curl. The "NetCurl" Cxn class
     is very fast and uses persistent connections but requires XS and
-    libcurl.
+    "libcurl".
 
     This class does Elasticsearch::Role::Cxn::HTTP, whose documentation
     provides more information.
@@ -63,7 +63,7 @@ AUTHOR
     Clinton Gormley <drtech@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is Copyright (c) 2013 by Elasticsearch BV.
+    This software is Copyright (c) 2014 by Elasticsearch BV.
 
     This is free software, licensed under:
 

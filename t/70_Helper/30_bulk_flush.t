@@ -5,7 +5,7 @@ use warnings;
 use lib 't/lib';
 use Elasticsearch::Bulk;
 
-my $es = do "es_test_server.pl";
+my $es = do "es_sync.pl";
 
 $es->indices->delete( index => '_all' );
 

@@ -2,7 +2,7 @@ use Test::More;
 use Test::Exception;
 use Elasticsearch;
 use lib 't/lib';
-use Elasticsearch::MockCxn qw(mock_sniff_client);
+use MockCxn qw(mock_sniff_client);
 
 ## Runaway nodes (ie wrong HTTP response codes signal node failure, instead of
 ## request failure)

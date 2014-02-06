@@ -8,7 +8,9 @@ use lib 't/lib';
 use Elasticsearch::Bulk;
 use Log::Any::Adapter;
 
-my $es = do "es_test_server.pl";
+my $es = do "es_sync.pl";
+
+my $is_0_90 = $es->info->{version}{number} =~ /^0.90/;
 
 $es->indices->delete( index => '_all' );
 
@@ -111,7 +113,8 @@ $b = bulk(
                 _type    => 'test',
                 _id      => 1,
                 _version => 1,
-                ok       => JSON::true()
+                status   => 201,
+                ok       => JSON::true(),
             },
             0
         ),
@@ -120,7 +123,8 @@ $b = bulk(
             {   _index => 'test',
                 _type  => 'test',
                 _id    => 1,
-                error  => re('MapperParsingException')
+                error  => re('MapperParsingException'),
+                status => 400,
             },
             1
         ),
@@ -129,7 +133,8 @@ $b = bulk(
             {   _index => 'test',
                 _type  => 'test',
                 _id    => 1,
-                error  => re('VersionConflictEngineException')
+                error  => re('VersionConflictEngineException'),
+                status => 409,
             },
             2, 1
         ),
@@ -178,10 +183,13 @@ sub test_flush {
 sub test_params {
 #===================================
     my ( $type, $result, $j, $version ) = @_;
+    delete $result->{ok}
+        unless $is_0_90;
+
     return sub {
         is $_[0], 'index', "$type - action";
-        cmp_deeply $_[1], $result,  "$type - result";
-        is $_[2],         $j,       "$type - array index";
-        is $_[3],         $version, "$type - version";
+        cmp_deeply $_[1], subhashof($result), "$type - result";
+        is $_[2], $j,       "$type - array index";
+        is $_[3], $version, "$type - version";
     };
 }

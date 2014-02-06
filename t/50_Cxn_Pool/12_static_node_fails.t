@@ -2,7 +2,7 @@ use Test::More;
 use Test::Exception;
 use Elasticsearch;
 use lib 't/lib';
-use Elasticsearch::MockCxn qw(mock_static_client);
+use MockCxn qw(mock_static_client);
 
 ## One node fails with a Cxn error, then rejoins
 

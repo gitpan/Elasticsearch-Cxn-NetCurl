@@ -1,11 +1,12 @@
-package Elasticsearch::MockCxn;
+package MockCxn;
 
 use strict;
 use warnings;
 
 use Data::Dumper;
 use Moo;
-with 'Elasticsearch::Role::Cxn::HTTP';
+with 'Elasticsearch::Role::Cxn', 'Elasticsearch::Role::Cxn::HTTP',
+    'Elasticsearch::Role::Is_Sync';
 
 use Sub::Exporter -setup => {
     exports => [ qw(
@@ -91,6 +92,7 @@ sub perform_request {
         $response->{code},       # code
         $response->{error},      # msg
         $response->{content},    # body
+        { 'content-type' => 'application/json' }
     );
 }
 
@@ -114,7 +116,7 @@ sub _mock_client {
     my $params = shift;
     $i = 0;
     return Elasticsearch->new(
-        cxn            => '+Elasticsearch::MockCxn',
+        cxn            => '+MockCxn',
         cxn_pool       => $pool,
         mock_responses => \@_,
         randomize_cxns => 0,

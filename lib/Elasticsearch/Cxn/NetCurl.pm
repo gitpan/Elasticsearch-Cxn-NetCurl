@@ -1,9 +1,14 @@
 package Elasticsearch::Cxn::NetCurl;
 
 use Moo;
-with 'Elasticsearch::Role::Cxn::HTTP';
+with 'Elasticsearch::Role::Cxn::HTTP',
+    'Elasticsearch::Role::Cxn',
+    'Elasticsearch::Role::Is_Sync';
 
-use Elasticsearch 0.76 ();
+use Elasticsearch 1.00;
+our $VERSION = "1.00";
+
+use HTTP::Parser::XS qw(HEADERS_AS_HASHREF parse_http_response);
 use Try::Tiny;
 use Net::Curl::Easy qw(
     CURLOPT_HEADER
@@ -21,8 +26,6 @@ use Net::Curl::Easy qw(
     CURLINFO_RESPONSE_CODE
     CURLOPT_TCP_NODELAY
 );
-
-our $VERSION = '0.03';
 
 use namespace::clean;
 
@@ -64,14 +67,16 @@ sub perform_request {
         $handle->setopt( CURLOPT_SSL_VERIFYHOST, 0 );
     }
 
-    my $content = my $head = my $msg = '';
+    my $content = my $head = '';
     $handle->setopt( CURLOPT_WRITEDATA,  \$content );
     $handle->setopt( CURLOPT_HEADERDATA, \$head );
 
-    my $code;
+    my ( $code, $msg, $headers );
+
     try {
         $handle->perform;
-        $code = $handle->getinfo(CURLINFO_RESPONSE_CODE);
+        ( undef, undef, $code, $msg, $headers )
+            = parse_http_response( $head, HEADERS_AS_HASHREF );
     }
     catch {
         $code = 509;
@@ -81,14 +86,12 @@ sub perform_request {
         undef $content;
     };
 
-    my ($ce) = ( $head =~ /^Content-Encoding: (\w+)/smi );
-
     return $self->process_response(
         $params,     # request
         $code,       # code
         $msg,        # msg
         $content,    # body
-        $ce          # encoding,
+        $headers     # headers
     );
 }
 
@@ -117,19 +120,21 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses libcurl via Net::Curl
 
 =head1 VERSION
 
-version 0.03
+version 1.00
 
 =head1 DESCRIPTION
 
 Provides an HTTP Cxn class based on L<Net::Curl>.
 The C<NetCurl> Cxn class is very fast and uses persistent connections but
-requires XS and libcurl.
+requires XS and C<libcurl>.
 
 This class does L<Elasticsearch::Role::Cxn::HTTP>, whose documentation
 provides more information.
@@ -195,7 +200,7 @@ Clinton Gormley <drtech@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2013 by Elasticsearch BV.
+This software is Copyright (c) 2014 by Elasticsearch BV.
 
 This is free software, licensed under:
 

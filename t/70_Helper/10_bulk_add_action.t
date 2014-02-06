@@ -6,10 +6,10 @@ use warnings;
 use lib 't/lib';
 
 my $es;
-$es = do "es_test_server.pl";
+$es = do "es_sync.pl";
 
 BEGIN {
-    $es = do "es_test_server.pl";
+    $es = do "es_sync.pl";
     use_ok "Elasticsearch::Bulk";
 }
 

@@ -1,5 +1,8 @@
 Revision history for Elasticsearch-Cxn-NetCurl
 
+1.00    2014-02-07
+        Moved the NetCurl source code into the repo for Elasticsearch.pm
+
 0.03    2013-12-03
         Removed custom timeouts - rely on defaults
         Tidied up Curl imports

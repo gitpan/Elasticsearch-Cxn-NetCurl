@@ -8,7 +8,9 @@ use warnings;
 use Elasticsearch::Scroll;
 use Elasticsearch::Bulk;
 
-our $es = do "es_test_server.pl";
+our $es = do "es_sync.pl";
+my $is_0_90 = $es->info->{version}{number} =~ /^0.90/;
+
 $es->indices->delete( index => '_all', ignore => 404 );
 do "index_test_data.pl" or die $!;
 
@@ -60,17 +62,22 @@ is $es->count(
     )->{count}, 50,
     'Transfrom - removed docs';
 
+my $query = {
+    bool => {
+        must => [
+            { term => { color       => 'green' } },
+            { term => { transformed => 1 } }
+        ]
+    }
+};
+unless ($is_0_90) {
+    $query = { query => $query };
+}
+
 is $es->count(
     index => 'test2',
     type  => 'test',
-    body  => {
-        bool => {
-            must => [
-                { term => { color       => 'green' } },
-                { term => { transformed => 1 } }
-            ]
-        }
-    },
+    body  => $query,
     )->{count}, 50,
     'Transfrom - transformed docs';
 

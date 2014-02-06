@@ -6,7 +6,7 @@ use warnings;
 use Elasticsearch::Bulk;
 use lib 't/lib';
 
-my $es = do "es_test_server.pl";
+my $es = do "es_sync.pl";
 
 my $b = Elasticsearch::Bulk->new( es => $es, index => 'i', type => 't' );
 my $s = $b->_serializer;
