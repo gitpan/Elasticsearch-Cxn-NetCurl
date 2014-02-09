@@ -3,7 +3,7 @@ NAME
     via Net::Curl
 
 VERSION
-    version 1.00
+    version 1.01
 
 DESCRIPTION
     Provides an HTTP Cxn class based on Net::Curl. The "NetCurl" Cxn class

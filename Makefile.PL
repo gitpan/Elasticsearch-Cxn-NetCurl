@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "apache",
   "NAME" => "Elasticsearch::Cxn::NetCurl",
   "PREREQ_PM" => {
-    "Elasticsearch" => "1.00",
+    "Elasticsearch" => "1.01",
     "Elasticsearch::Role::Cxn" => 0,
     "Elasticsearch::Role::Cxn::HTTP" => 0,
     "Elasticsearch::Role::Is_Sync" => 0,
@@ -48,7 +48,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "1.00",
+  "VERSION" => "1.01",
   "test" => {
     "TESTS" => "t/*.t t/10_Basic/*.t t/20_Serializer/*.t t/30_Logger/*.t t/40_Transport/*.t t/50_Cxn_Pool/*.t t/60_Cxn/*.t t/70_Helper/*.t t/90_Client_Spec/*.t"
   }
@@ -57,7 +57,7 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Data::Dumper" => 0,
-  "Elasticsearch" => "1.00",
+  "Elasticsearch" => "1.01",
   "Elasticsearch::Bulk" => 0,
   "Elasticsearch::Role::Cxn" => 0,
   "Elasticsearch::Role::Cxn::HTTP" => 0,

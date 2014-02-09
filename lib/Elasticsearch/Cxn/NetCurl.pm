@@ -5,8 +5,8 @@ with 'Elasticsearch::Role::Cxn::HTTP',
     'Elasticsearch::Role::Cxn',
     'Elasticsearch::Role::Is_Sync';
 
-use Elasticsearch 1.00;
-our $VERSION = "1.00";
+use Elasticsearch 1.01;
+our $VERSION = "1.01";
 
 use HTTP::Parser::XS qw(HEADERS_AS_HASHREF parse_http_response);
 use Try::Tiny;
@@ -128,7 +128,7 @@ Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses libcurl via Net::C
 
 =head1 VERSION
 
-version 1.00
+version 1.01
 
 =head1 DESCRIPTION
 

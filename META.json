@@ -40,7 +40,7 @@
             "URI::Escape::XS" : "0"
          },
          "requires" : {
-            "Elasticsearch" : "1.00",
+            "Elasticsearch" : "1.01",
             "Elasticsearch::Role::Cxn" : "0",
             "Elasticsearch::Role::Cxn::HTTP" : "0",
             "Elasticsearch::Role::Is_Sync" : "0",
@@ -80,6 +80,6 @@
          "web" : "https://github.com/elasticsearch/elasticsearch-perl"
       }
    },
-   "version" : "1.00"
+   "version" : "1.01"
 }
 
