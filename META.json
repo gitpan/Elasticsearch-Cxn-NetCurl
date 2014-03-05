@@ -1,10 +1,10 @@
 {
-   "abstract" : "A Cxn implementation which uses libcurl via Net::Curl",
+   "abstract" : "DEPRECATED: A Cxn implementation which uses libcurl via Net::Curl",
    "author" : [
       "Clinton Gormley <drtech@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.012, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Dist::Zilla version 5.013, CPAN::Meta::Converter version 2.133380",
    "license" : [
       "apache_2_0"
    ],
@@ -40,7 +40,7 @@
             "URI::Escape::XS" : "0"
          },
          "requires" : {
-            "Elasticsearch" : "1.01",
+            "Elasticsearch" : "1.05",
             "Elasticsearch::Role::Cxn" : "0",
             "Elasticsearch::Role::Cxn::HTTP" : "0",
             "Elasticsearch::Role::Is_Sync" : "0",
@@ -80,6 +80,6 @@
          "web" : "https://github.com/elasticsearch/elasticsearch-perl"
       }
    },
-   "version" : "1.01"
+   "version" : "1.05"
 }
 

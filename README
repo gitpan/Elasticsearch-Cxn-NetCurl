@@ -1,11 +1,29 @@
 NAME
-    Elasticsearch::Cxn::NetCurl - A Cxn implementation which uses libcurl
-    via Net::Curl
+    Elasticsearch::Cxn::NetCurl - DEPRECATED: A Cxn implementation which
+    uses libcurl via Net::Curl
 
 VERSION
-    version 1.01
+    version 1.05
 
 DESCRIPTION
+    THIS MODULE IS DEPRECATED.
+
+    ************************************************************************
+    ******
+
+    Because of the name clash between "ElasticSearch.pm" and
+    "Elasticsearch.pm" this module has been renamed :
+    Search::Elasticsearch::Cxn:NetCurl.
+
+    See <https://github.com/elasticsearch/elasticsearch-perl/issues/20> for
+    details.
+
+    This distribution will be removed from CPAN in 2015. Please update your
+    code.
+
+    ************************************************************************
+    ******
+
     Provides an HTTP Cxn class based on Net::Curl. The "NetCurl" Cxn class
     is very fast and uses persistent connections but requires XS and
     "libcurl".
@@ -13,8 +31,103 @@ DESCRIPTION
     This class does Elasticsearch::Role::Cxn::HTTP, whose documentation
     provides more information.
 
+DESCRIPTION
+CONFIGURATION
+  "connect_timeout"
+    Unlike most HTTP backends, Net::Curl accepts a separate
+    "connect_timeout" parameter, which defaults to 2 seconds but can be
+    reduced in an environment with low network latency.
+
+  Inherited configuration
+    From Elasticsearch::Role::Cxn::HTTP
+
+    *   node
+
+    *   max_content_length
+
+    *   deflate
+
+    From Elasticsearch::Role::Cxn
+
+    *   request_timeout
+
+    *   ping_timeout
+
+    *   dead_timeout
+
+    *   max_dead_timeout
+
+    *   sniff_request_timeout
+
+    *   sniff_timeout
+
+    *   handle_args
+
+METHODS
+  "perform_request()"
+        ($status,$body) = $self->perform_request({
+            # required
+            method      => 'GET|HEAD|POST|PUT|DELETE',
+            path        => '/path/of/request',
+            qs          => \%query_string_params,
+
+            # optional
+            data        => $body_as_string,
+            mime_type   => 'application/json',
+            timeout     => $timeout
+        });
+
+    Sends the request to the associated Elasticsearch node and returns a
+    $status code and the decoded response $body, or throws an error if the
+    request failed.
+
+  Inherited methods
+    From Elasticsearch::Role::Cxn::HTTP
+
+    *   scheme()
+
+    *   is_https()
+
+    *   userinfo()
+
+    *   default_headers()
+
+    *   max_content_length()
+
+    *   build_uri()
+
+    From Elasticsearch::Role::Cxn
+
+    *   host()
+
+    *   port()
+
+    *   uri()
+
+    *   is_dead()
+
+    *   is_live()
+
+    *   next_ping()
+
+    *   ping_failures()
+
+    *   mark_dead()
+
+    *   mark_live()
+
+    *   force_ping()
+
+    *   pings_ok()
+
+    *   sniff()
+
+    *   process_response()
+
 SEE ALSO
     *   Elasticsearch::Role::Cxn::HTTP
+
+    *   Elasticsearch::Cxn::Hijk
 
     *   Elasticsearch::Cxn::LWP
 
@@ -26,9 +139,9 @@ BUGS
 
     If you have any suggestions for improvements, or find any bugs, please
     report them to
-    <http://github.com/elasticsearch/elasticsearch-perl-netcurl/issues>. I
-    will be notified, and then you'll automatically be notified of progress
-    on your bug as I make changes.
+    <http://github.com/elasticsearch/elasticsearch-perl/issues>. I will be
+    notified, and then you'll automatically be notified of progress on your
+    bug as I make changes.
 
 SUPPORT
     You can find documentation for this module with the perldoc command.
@@ -39,7 +152,7 @@ SUPPORT
 
     *   GitHub
 
-        <http://github.com/elasticsearch/elasticsearch-perl-netcurl>
+        <http://github.com/elasticsearch/elasticsearch-perl>
 
     *   CPAN Ratings
 
